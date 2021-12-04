@@ -1,0 +1,10 @@
+Created Modpack.
+Added Mods
+Removed Some recipes (And clay)
+Added how to craft basic resources.
+Able to do some Thermal Expansion recipes to start it.
+Eased Create recipes to start it.
+Eased Integrated Dynamics recipes to start it
+
+Created recipe for the marvelous lapislazuli
+Created some liquids
