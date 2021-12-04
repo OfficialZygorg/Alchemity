@@ -8,3 +8,5 @@ Eased Integrated Dynamics recipes to start it
 
 Created recipe for the marvelous lapislazuli
 Created some liquids
+
+Still not clay recipe
