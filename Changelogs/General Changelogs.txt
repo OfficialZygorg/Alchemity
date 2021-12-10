@@ -1,3 +1,14 @@
+0.0.9
+
+**Fixes**
+
+Fixed some recipes that blocked you from continuing the modpack (Thanks to Deadpoolskan)
+
+
+**Modified**
+
+Recipe of The Mighty Godly Clay!
+
 0.0.8
 
 Added some nested machine casings
