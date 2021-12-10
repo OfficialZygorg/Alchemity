@@ -10,15 +10,11 @@ Almost able to craft the Ultimate Singularity! (You now what that means! 'Wink W
 0.0.10
 
 **Updated**
-
 Modpack image
-
 Forge
-
 Bunch of mods
 
 **Modified**
-
 Sapling recipe
 
 **Remember**
@@ -27,12 +23,10 @@ Back up your world between updates
 0.0.9
 
 **Fixes**
-
 Fixed some recipes that blocked you from continuing the modpack (Thanks to Deadpoolskan)
 
 
 **Modified**
-
 Recipe of The Mighty Godly Clay!
 
 0.0.8
@@ -48,83 +42,45 @@ Fast change of versions and change to Beta relese because the modpack is getting
 0.0.6
 
 **Added**
-
 More recipes!
-
 Better iron,copper and silve smelting recipes!
-
 You can now have nickel! (Now you can do Invar and Constantan alloys, and have a easier time to create alloys)
-
 You can now craft lava and netherrack!
-
 You can now craft certus quartz!
-
 Better thermal rubber crafting!
-
 Reemplaced all dried kelp with rubber! (For Create crafting recipes)
-
 Blood Magic is now possible to start!
-
 Immersive Engineering is now possible to start!
-
 Refined Storage is now possible to start!
-
 Applied Energistics 2 is now possible to start!
 
- 
-
 **Removed**
-
 Some mods whole craftings (Untill you can start them) (PD: Let me know if you can start mods, to unlock the recipes)
 
- 
-
 **Information?**
-
 I thought this would be better wihile playing in peacefull, now i dont care about you having mobs spawning :D (Less burnden for me, less recipes to do :P)
 
 0.0.5
-
 -First release!
-
 -Expect bugs (Recipe conflicts, or recipes that dont make sense because i dont see them and/or recipes that i removed that didnt had to be removed)
 
- 
-
 *Additions*
-
 Recipe for oak planks (With 4 sticks with a ratio of 4s:1p)
-
 Recipes for redstone dust & glowstone dust, or gravel, sand, dust and dirt, for oak saplings, for water bucket, for slime and for bone meal.
-
 Recipes to being able to start Integrated Dynamics, Create and Thermal.
-
 Changed the recipes for some cobble generators.
-
 Changed on how to craft some ingots.
-
 Added a lot recipes requiring Create contraptions.
-
 Added a recipe for lapislazuli.
-
 Added a couple of test to literally test how to do Draconic Evolution fusion recipes and Extended Crafting recipes
 
- 
-
 *Removals*
-
 Removed some crafts and Removed Clay
-
  
-
- *For the next update*
+**For the next update**
 
 More crafts!
-
 Ways to start other mods!
-
 Bug fixes/fixes?
-
 The removal of recipes of whole mods for the time being (Mods that cant be started because you cant craft the starting materials of them)
-
 And will try to do add flying into survival mode and permanent peacefull mode (Also, will try to disable other dimensions)
