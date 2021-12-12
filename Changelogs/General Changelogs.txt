@@ -1,7 +1,8 @@
-0.0.11 (TBR)
+0.0.11
 
 **Added**
 Recipes for draconic evolution (You can now start Draconic Evolution!)
+Some extended crafting recipes (For nether star shards, dragon heart and small chaos fragments)
 Unlocked some mods
 
 **Notice**
