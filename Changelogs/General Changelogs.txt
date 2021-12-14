@@ -2,6 +2,8 @@
 
 **Fixes**
 Now you're able to make glowstone blocks
+
+**Additions**
 Now you're able to start: big reactors and powah
 
 **Changes**
