@@ -1,3 +1,23 @@
+0.1.1
+
+**Fix**
+To craft the blaze burner from create, you needed coal, but to get coal you need first a blaze burner, changing the recipe to charcoal block instead
+https://github.com/OfficialZygorg/Alchemity-The-Skyblock/issues/1
+
+0.1.0
+
+**Feature**
+Initial Release!
+You can now craft clay!
+
+**Added**
+Enabled some mods
+Added recipes for:
+Marble, astral luminous crafting table, lightwell, liquid starlight, flux
+
+**Changed**
+Recipe for clay
+
 0.0.11
 
 **Added**
