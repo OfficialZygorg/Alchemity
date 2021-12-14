@@ -1,3 +1,13 @@
+0.1.2
+
+**Fixes**
+Now you're able to make glowstone blocks
+Now you're able to start: big reactors and powah
+
+**Changes**
+Updated mods
+Updated the recipe of clay (With more mods enabled to use, more items added for the clay to be crafted :D)
+
 0.1.1
 
 **Fix**
