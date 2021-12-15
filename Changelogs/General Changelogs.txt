@@ -1,3 +1,17 @@
+1.0.0 (The Creative and Final Update) (Final content release, fix updates will be avaiable when someone has encountered and reported an issue)
+
+**Additions**
+Ex Nihilo is now enabled (For mid game tho)
+You now can craft seeds for essence (Yay mystical agriculture is enabled!)
+Some creative items are craftable now!
+You can now create the ultimate singularity
+You can now craft the philosofers stone from project e!
+
+**Changes**
+Lava bucket is now easier to craft/have (The old recipe stays for automation)
+Enabled the rest of the mods
+Modified the recipe for clay (Ultimate singularity and creative essence added)
+
 0.1.3
 
 **Fixes**
