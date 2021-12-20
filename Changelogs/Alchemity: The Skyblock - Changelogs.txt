@@ -1,3 +1,14 @@
+1.0.1 (Bugfix)
+
+**Fix?**
+Attempt to remove some ways i didnt knew of getting clay.
+Please, report if you can or can not get clay anymore via the report below:
+https://github.com/OfficialZygorg/Alchemity-The-Skyblock/issues/2
+Removed astral sorcery sand/red sand to clay, Removed botania clayconia
+
+**Changes**
+Updated mods and forge
+
 1.0.0 (The Creative and Final Update) (Final content release, fix updates will be avaiable when someone has encountered and reported an issue)
 
 **Additions**
