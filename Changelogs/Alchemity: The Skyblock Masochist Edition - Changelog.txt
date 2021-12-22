@@ -1,4 +1,8 @@
 0.0.1 (Not Released)
 
-Changed a lot of recipes to be harder
+**Modified**
+A lot of recipes
+
+**Added**
 Quests created for the players
+Some mods
