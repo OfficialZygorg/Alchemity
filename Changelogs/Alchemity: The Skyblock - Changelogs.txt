@@ -1,3 +1,9 @@
+1.0.2
+
+**Added**
+FTB Essentials
+Ability to fly on survival
+
 1.0.1 (Bugfix)
 
 **Fix?**
