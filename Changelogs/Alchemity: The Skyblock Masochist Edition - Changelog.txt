@@ -8,3 +8,6 @@ Quests created for the players
 Some mods
 Added flying on survival mode at the start of the pack
 Added perma peaceful mode (Even if you change the difficulty by commands, it will revert to peaceful)
+
+**Removed**
+All quest rewards (You wanted more masochism? There. You have it!
