@@ -1,0 +1,209 @@
+{
+	id: "04251BAD224EAA8A"
+	group: "2E640E0801B44256"
+	order_index: 0
+	filename: "chapter_1"
+	title: "Chapter 1"
+	icon: "minecraft:cobblestone"
+	default_quest_shape: ""
+	default_hide_dependency_lines: false
+	quests: [
+		{
+			title: "A familiar void..."
+			x: 0.0d
+			y: 0.0d
+			subtitle: "And the void stares back..."
+			description: [
+				"In this modpack, you will make a LOT, and i mean, a LOT of machines, contraptions, etc!"
+				"Now, for a bit of info on how you got here in the first place, if you want!"
+				""
+				"'Long ago, there was a vaste and beautiful world!"
+				"But, there's no world here..."
+				"As the world imploded, you were the only one (maybe) to be transported to another dimension, safely at least, and with a smart tablet (quest book) that will help you in creating a material, soo powerful, that it might create our old home called Earth (Overworld) again!'"
+				""
+				"Now, for the starters, get me some materials to scan! And a crafting table, please."
+				"(Shift+Right click onto the grass/dirt to get Stone pebbles and sticks! And get that emergency bucket!)"
+			]
+			id: "4131C4098F748A9B"
+			tasks: [
+				{
+					id: "5ECC399394AD1056"
+					type: "item"
+					item: "minecraft:oak_planks"
+					count: 4L
+				}
+				{
+					id: "09098B342ADF496D"
+					type: "item"
+					item: "minecraft:cobblestone"
+					count: 16L
+				}
+				{
+					id: "55E9B2B2389E6DC4"
+					type: "item"
+					item: "minecraft:crafting_table"
+				}
+			]
+			rewards: [{
+				id: "0FDF346FAE099D62"
+				type: "item"
+				item: "minecraft:bucket"
+			}]
+		}
+		{
+			title: "Materials scanned, please continue!"
+			x: 2.0d
+			y: 0.0d
+			subtitle: "Why in the world i need to do this! Again!"
+			description: [
+				"3,2,1.... Aaaand *DING*"
+				"Materials safely scanned and it confirms that this is a small void island!"
+				"You dont know what that is? Let me tell you!"
+				"Remember what i said about you being transported here with me? They teleported a bit of land as well!"
+				"Dont ask me why we're floating, but it seems that there's an anomally that makes every block to float on the void!"
+				""
+				"Now, i'll stop blabbering and tell you what you want to hear!"
+				"As i said a few seconds ago, the materials are safe to harvest! There's no end to them (Somehow)..."
+				"I want you, to build a machine with this blueprint that i have here to melt the stone into unrefined stone!"
+				"Further options require more scanning,,,"
+				""
+				"(You can scan specific stuff by looking at it!)"
+			]
+			dependencies: ["4131C4098F748A9B"]
+			id: "5B750BC11222080B"
+			tasks: [
+				{
+					id: "66A27BCB1A6F8538"
+					type: "item"
+					item: {
+						id: "custommachinery:custom_machine_item"
+						Count: 1b
+						tag: {
+							machine: "custommachinery:basic_cobble_refiner"
+						}
+					}
+				}
+				{
+					id: "36CE9A7948532037"
+					type: "item"
+					item: {
+						id: "custommachinery:custom_machine_item"
+						Count: 1b
+						tag: {
+							machine: "custommachinery:filler"
+						}
+					}
+				}
+				{
+					id: "479CC156ABE1375C"
+					type: "item"
+					item: "kubejs:fluids/unrefined_cobblestone_bucket"
+				}
+				{
+					id: "5E814106DBF0AF4A"
+					type: "observation"
+					title: "Scan the liquid bucket"
+					timer: 0L
+					observe_type: 0
+					to_observe: "kubejs:unrefined_cobblestone_bucket"
+				}
+			]
+			rewards: [{
+				id: "0B507EA6197E202C"
+				type: "item"
+				item: {
+					id: "custommachinery:custom_machine_item"
+					Count: 1b
+					tag: {
+						machine: "custommachinery:basic_tank"
+					}
+				}
+				count: 4
+			}]
+		}
+		{
+			title: "Cables, and more cables!"
+			x: 0.0d
+			y: -1.0d
+			shape: "rsquare"
+			subtitle: "This will become in handy!"
+			description: ["As you know, you dont have any meanings of moving liquids! With these, you will be able to move liquids, AND items! (Happy automation!)"]
+			dependencies: ["4131C4098F748A9B"]
+			id: "6E46F7BC3C04528D"
+			tasks: [
+				{
+					id: "49FCDAFE7A84E2FE"
+					type: "item"
+					item: "integrateddynamics:cable"
+					count: 16L
+				}
+				{
+					id: "62CDBD82BD85841E"
+					type: "item"
+					item: "integratedtunnels:part_interface_item"
+					count: 8L
+				}
+				{
+					id: "5603C18E1802C083"
+					type: "item"
+					item: "integratedtunnels:part_importer_item"
+					count: 4L
+				}
+				{
+					id: "1DD0630E78BC1CF6"
+					type: "item"
+					item: "integratedtunnels:part_exporter_item"
+					count: 4L
+				}
+				{
+					id: "43C600C9E625FAEF"
+					type: "item"
+					item: "integratedtunnels:part_importer_fluid"
+					count: 2L
+				}
+				{
+					id: "45AFFC57BD6BAA30"
+					type: "item"
+					item: "integratedtunnels:part_exporter_fluid"
+					count: 2L
+				}
+				{
+					id: "3232A4214A6BEE14"
+					type: "item"
+					item: "integratedtunnels:part_interface_fluid"
+					count: 8L
+				}
+				{
+					id: "3EA0AEBFC21AE14A"
+					type: "item"
+					item: "integrateddynamics:variable"
+					count: 64L
+				}
+				{
+					id: "14C023EF3C3EED68"
+					type: "item"
+					item: "integrateddynamics:portable_logic_programmer"
+				}
+			]
+		}
+		{
+			title: "Mining operations: Start!"
+			x: 1.5d
+			y: -1.0d
+			subtitle: "Finally, my hands hurt!"
+			dependencies: ["4131C4098F748A9B"]
+			id: "2D823C0939CD05EE"
+			tasks: [{
+				id: "1BFAC4A06F9C50E2"
+				type: "item"
+				item: {
+					id: "custommachinery:custom_machine_item"
+					Count: 1b
+					tag: {
+						machine: "custommachinery:cobble_gen_mk1"
+					}
+				}
+			}]
+		}
+	]
+}
