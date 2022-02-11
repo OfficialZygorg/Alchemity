@@ -1,0 +1,795 @@
+// priority: 0
+
+settings.logAddedRecipes = true
+settings.logRemovedRecipes = true
+settings.logSkippedRecipes = false
+settings.logErroringRecipes = true
+
+//Thanks for an user on the kubejs discord for posting a script (This is a modification of that script)
+//On login give /fly, on leave remove /fly
+onEvent('player.logged_in',e=>{
+    let username = e.player.name
+    if (!e.player.stages.has('joined')) {
+        e.player.stages.add('joined');
+        e.player.stages.remove('left');
+        e.server.runCommand(`fly ${username}`);
+        e.server.runCommand(`say Enabled fly for ${username}`);
+    }
+})
+
+onEvent('player.logged_out',e=>{
+    let username = e.player.name
+    if (!e.player.stages.has('left')) {
+        e.player.stages.add('left');   
+        e.player.stages.remove('joined');
+        e.server.runCommand(`fly ${username}`);
+        e.server.runCommand(`say Disabled fly for ${username}`);
+    }
+})
+
+//Perma peaceful
+onEvent('player.tick',e=>{
+    e.server.runCommandSilent('/difficulty peaceful')
+    e.server.runCommandSilent('/gamerule doMobSpawning false')
+})
+
+//Unify Materials
+events.listen('recipes', function (e) {
+    materialsToUnify.forEach(function (material) {
+        typesToUnify.forEach(function (type) {
+                var tagString = '#forge:' + type + 's/' + material;
+                var tag = ingredient.of(tagString);
+                if (tag.stacks.size() > 1) {
+                    var prefItem = getPreferredItemInTag(tag);
+                    // console.log('Tag: ' + tag);
+                    // console.log('Prefered item: ' + prefItem);
+                    e.replaceOutput({}, tagString, prefItem);
+                }
+        });
+    });
+});
+var typesToUnify = ['nugget','ingot','gem','storage_block','ore','dust','gear','plate','rod'];    
+var materialsToUnify = [
+    'iron',
+    'copper',
+    'tin',
+    'silver',
+    'gold',
+    'brass',
+    'steel',
+    'electrum',
+    'lead'
+];
+var modPriorities = [
+    'minecraft',
+    'thermal',
+    'mekanism',
+    'create',
+    'immersiveengineering'
+];
+function getPreferredItemInTag(tag) {
+    var pref = wrapArray(tag.stacks).sort(({ mod: a }, { mod: b }) => compareIndices(a, b, tag))[0] || item.of(air);
+    // console.info('Preferred item: ' + tag + ' => ' + pref);
+    return pref;
+}
+function compareIndices(a, b, tag) {
+    if (a == b) return 0; // iff a == b, they'll be found at the same position in modPriorities
+
+    for (let mod of modPriorities) {
+        if (mod == a) return -1; // if a comes before b, then idx(a) < idx(b), so -1
+        if (mod == b) return 1; // if a comes after b, then idx(a) > idx(b), so 1
+    }
+
+    // console.error('[' + a + ', ' + b + '] were both unaccounted for in mod unification' + (tag ? ' for ' + tag : '!'));
+    return 0;
+}
+function wrapArray(array) {
+    return utils.listOf(array).toArray();
+}
+        
+onEvent('recipes',e=>{
+    //Remove mods
+    e.remove({mod:'xpbook'})
+    e.remove({mod:'translocators'})
+    e.remove({mod:'titanium'})
+    e.remove({mod:'tanknull'})
+    e.remove({mod:'sophisticatedbackpacks'})
+    e.remove({mod:'rslargepatterns'})
+    e.remove({mod:'refinedpipes'})
+    e.remove({mod:'rs_ctr2'})
+    e.remove({mod:'rftoolscontrol'})
+    e.remove({mod:'rsrequestify'})
+    e.remove({mod:'rsinfinitybooster'})
+    e.remove({mod:'pipez'})
+    e.remove({mod:'pamhc2crops'})
+    e.remove({mod:'packagedexcrafting'})
+    e.remove({mod:'packagedauto'})
+    e.remove({mod:'overloaded'})
+    e.remove({mod:'morphtool'})
+    e.remove({mod:'moreobservers'})
+    e.remove({mod:'mob_grinding_utils'})
+    e.remove({mod:'jecalculation'})
+    e.remove({mod:'ironjetpacks'})
+    e.remove({mod:'ironchest'})
+    e.remove({mod:'industrialforegoing'})
+    e.remove({mod:'hostilenetworks'})
+    e.remove({mod:'forbidden_arcanus'})
+    e.remove({mod:'farmersdelight'})
+    e.remove({mod:'extrabotany'})
+    e.remove({mod:'exchangers'})
+    e.remove({mod:'exnihiloauto'})
+    e.remove({mod:'darkutils'})
+    e.remove({mod:'creativetweaks'})
+    e.remove({mod:'creativecrafter'})
+    e.remove({mod:'colossal_battery'})
+    e.remove({mod:'craftingautomat'})
+    e.remove({mod:'cabletiers'})
+    e.remove({mod:'computercraft'})
+    e.remove({mod:'buildinggadgets'})
+    e.remove({mod:'avaritia'})
+    e.remove({mod:'botanicalmachinery'})
+    e.remove({mod:'bhc'})
+    e.remove({mod:'avaritiafurnace'})
+    e.remove({mod:'ars_noveau'})
+    e.remove({mod:'curios'})
+    e.remove({mod:'apotheosis'})
+    e.remove({mod:'advancedperipherals'})
+    e.remove({mod:'pachouli'})
+    e.remove({mod:'ae2extras'})
+    e.remove({mod:'itemfilters'})
+    e.remove({mod:'thermal'})
+    e.remove({mod:'cyclic'})
+    e.remove({mod:'extendedcrafting'})
+    e.remove({mod:'cookingforblockheads'})
+    e.remove({mod:'xnet'})
+    e.remove({mod:'woot'})
+    e.remove({mod:'tconstruct'})
+    e.remove({mod:'tesseract'})
+    e.remove({mod:'simplegens'})
+    e.remove({mod:'refinedstorageaddons'})
+    e.remove({mod:'rftoolspower'})
+    e.remove({mod:'rftoolsbase'})
+    e.remove({mod:'projectex'})
+    e.remove({mod:'projecte'})
+    e.remove({mod:'powah'})
+    e.remove({mod:'mythicalbotany'})
+    e.remove({mod:'mysticalagriculture'})
+    e.remove({mod:'mysticalagraditions'})
+    e.remove({mod:'morered'})
+    e.remove({mod:'mekanismgenerators'})
+    e.remove({mod:'mekanism'})
+    e.remove({mod:'lazierae2'})
+    e.remove({mod:'itemcollectors'})
+    e.remove({mod:'fluxnetworks'})
+    e.remove({mod:'bigreactors'})
+    e.remove({mod:'extrastorage'})
+    e.remove({mod:'extradisks'})
+    e.remove({mod:'exnihiloae'})
+    e.remove({mod:'envirotech'})
+    e.remove({mod:'draconicevolution'})
+    e.remove({mod:'appliedenergistics2'})
+    e.remove({mod:'alchemistry'})
+    e.remove({mod:'advgenerators'})
+    e.remove({mod:'ae2wtlib'})
+    e.remove({mod:'botania'})
+    e.remove({mod:'integratedtunnels'})
+    e.remove({mod:'integratedterminals'})
+    e.remove({mod:'integrateddynamics'})
+    e.remove({mod:'integratedcrafting'})
+    e.remove({mod:'integratedadditions'})
+    e.remove({mod:'integratednbt'})
+    e.remove({mod:'hammerlib'})
+    e.remove({mod:'upper'})
+    e.remove({mod:'modularnetworks'})
+    e.remove({mod:'exnihilosequentia'})
+    e.remove({mod:'excompressum'})
+    e.remove({mod:'endertanks'})
+    e.remove({mod:'enderchests'})
+    e.remove({mod:'eidolon'})
+    e.remove({mod:'chemlib'})
+    e.remove({mod:'bloodmagic'})
+    e.remove({mod:'computercraft'})
+    e.remove({mod:'usrg'})
+	e.remove({mod:'cobblefordays'})
+    e.remove({mod:'excompressum'})
+    e.remove({mod:'createaddition'})
+
+    //Remove recipes by id
+    e.remove({id:'minecraft:clay'})
+	e.remove({id:'minecraft:clay_ball'})
+    e.remove({id:'minecraft:oak_planks'})
+    e.remove({id:'minecraft:crafting_table'})
+    e.remove({id:'pebbles:stone_pebble_to_cobblestone'})
+    e.remove({id:'exnihilosequentia:ens_crook_stone'})
+    e.remove({id:'minecraft:furnace'})
+    e.remove({id:'minecraft:stone'})
+    e.remove({id:'/exnihilosequentia:ens_hammer_.*/'})
+    e.remove({id:'minecraft:andesite'})
+    e.remove({id:'create:andesite_cobblestone'})
+	e.remove({id:'botania:petal_apothecary/clayconia'})
+    e.remove({id:'astralsorcery:infuser/sand'})
+	e.remove({id:'astralsorcery:block_transmutation/sand_clay'})
+    e.remove({id:'minecraft:smoker'})
+    e.remove({id:'minecraft:blast_furnace'})
+    e.remove({id:'create:milling/cobblestone'})
+    e.remove({id:'create:milling/gravel'})
+    e.remove({id:'create:cutting/oak_log'})
+    e.remove({id:'createdeco:andesite_door'})
+
+    //Remove recipes by output
+    e.remove({output:'minecraft:clay'})
+	e.remove({output:'minecraft:clay_ball'})
+    e.remove({output:'#forge:ores'})
+    e.remove({output:'exnihilosequentia:pebble_stone'})
+    e.remove({output:'minecraft:stone'})
+    e.remove({output:'#forge:ingots/iron'})
+    e.remove({output:'#forge:ingots/copper'})
+    e.remove({output:'#forge:ingots/tin'})
+    e.remove({output:'#forge:ingots/silver'})
+    e.remove({output:'minecraft:andesite'})
+    e.remove({output:'create:andesite_cobblestone'})
+    e.remove({output:'thermal:iron_plate'})
+    e.remove({output:'create:brass_sheet'})
+    e.remove({output:'thermal:copper_plate'})
+    e.remove({output:'thermal:gold_plate'})
+    e.remove({output:'create:andesite_casing'})
+    e.remove({output:'create:brass_casing'})
+    e.remove({output:'create:copper_casing'})
+    e.remove({output:'create:shaft'})
+    e.remove({output:'#create:crushed_ores'})
+    e.remove({output:'#forge:plates'})
+    e.remove({output:'minecraft:glowstone_dust'})
+    e.remove({output:'minecraft:gold_ingot'})
+    e.remove({output:'minecraft:redstone'})
+    e.remove({output:'minecraft:glowstone_dust'})
+    e.remove({output:'create:brass_ingot'})
+    e.remove({output:'minecraft:quartz'})
+    e.remove({output:'create:copper_block'})
+
+    //Reemplace items on recipes
+    e.replaceInput({type:'minecraft:crafting_shaped'},'minecraft:dried_kelp','thermal:rubber')
+	e.replaceInput({type:'minecraft:crafting_shaped'},'minecraft:brick','minecraft:gold_ingot')
+    e.replaceInput({type:'minecraft:crafting_shaped'},'minecraft:terracotta','minecraft:gold_block')
+
+    //Shaped recipes
+    e.shaped('minecraft:oak_planks',['SS','SS'],{
+        S:'minecraft:stick'
+    })
+    e.shaped('minecraft:crafting_table',['PP','PP'],{
+        P:'#minecraft:planks'
+    })
+    e.shaped('minecraft:furnace',['CXC','X X','CXC'],{
+        C:'#forge:cobblestone',
+        X:'compressedblocks:c0_cobblestone'
+    })
+    e.shaped('3x minecraft:dirt',['GSG','GDG','GSG'],{
+        G:'minecraft:gravel',
+        S:'minecraft:sand',
+        D:'exnihilosequentia:dust'
+    })
+    e.shaped('minecraft:oak_sapling',['DBD','BDB','DBD'],{
+        B:'minecraft:bone_meal',
+        D:'minecraft:dirt'
+    })
+    e.shaped('minecraft:bone_block',[' D ','DID',' D '],{
+		D:'exnihilosequentia:dust',
+		I:'minecraft:dirt'
+	})
+    e.shaped('4x minecraft:glowstone_dust',['CTC','TDT','CTC'],{
+        C:'minicoal2:minicharcoal',
+        T:'minecraft:torch',
+        D:'#forge:dusts/iron'
+    })
+    e.shaped('2x minecraft:redstone',['NGN','NDN','NGN'],{
+        G:'minecraft:glowstone_dust',
+        D:'#forge:dusts/copper',
+        N:'minecraft:iron_nugget'
+    })
+    e.shaped('minecraft:lava_bucket',['CRC','RBR','CRC'],{
+		C:'compressedblocks:c0_cobblestone',
+		R:'minecraft:redstone_block',
+		B:'minecraft:bucket'
+	})
+    e.shaped('4x minecraft:quartz',[' B ','BGB',' B '],{
+        B:'minecraft:bone_meal',
+        G:'minecraft:glowstone_dust'
+    })
+    e.shaped('4x minecraft:slime_ball',['LDL','DWD','LDL'],{
+		L: 'minecraft:oak_leaves',
+		D: 'minecraft:dirt',
+		W: 'minecraft:water_bucket'
+	})
+    e.shaped('minecraft:iron_ore',['OOO','OSO','OOO'],{
+        O:'create:crushed_iron_ore',
+        S:'#forge:stone'
+    })
+    e.shaped('thermal:copper_ore',['OOO','OSO','OOO'],{
+        O:'create:crushed_copper_ore',
+        S:'#forge:stone'
+    })
+    e.shaped('thermal:tin_ore',['OOO','OSO','OOO'],{
+        O:'create:crushed_tin_ore',
+        S:'#forge:stone'
+    })
+    e.shaped('thermal:silver_ore',['OOO','OSO','OOO'],{
+        O:'create:crushed_silver_ore',
+        S:'#forge:stone'
+    })
+    e.shaped('minecraft:water_bucket',['LLL','LBL','LLL'],{
+		L:'minecraft:oak_leaves',
+		B:'minecraft:bucket'
+    })
+    e.remove({output:'minecraft:coarse_dirt'})
+    e.shaped('5x minecraft:coarse_dirt',['DGD','GDG','DGD'],{
+        D:'minecraft:dirt',
+        G:'minecraft:gravel'
+    })
+    e.shaped('4x minecraft:chest',['LLL','L L','LLL'],{
+        L:'minecraft:oak_log'
+    })
+    e.shaped('forbidden_arcanus:rotten_leather',['GGG','GBG','GGG'],{
+        G:'minecraft:grass',
+        B:'minecraft:water_bucket'
+    })
+
+    //Cobble generator recipes
+    e.shaped('usrg:cobblegenerator',['CBC','LGW','CBC'],{
+		C:'compressedblocks:c0_cobblestone',
+		G:'minecraft:glass',
+		L:'minecraft:lava_bucket',
+		W:'minecraft:water_bucket',
+        B:'minecraft:bone_block'
+	})
+    e.shaped('cobblefordays:tier_3',['III','LGW','III'],{
+        I:'minecraft:iron_block',
+        G:'usrg:cobblegenerator',
+        L:'minecraft:lava_bucket',
+        W:'minecraft:water_bucket'
+    })
+    e.shaped('cobblefordays:tier_4',['III','LGW','III'],{
+        I:'minecraft:gold_block',
+        G:'cobblefordays:tier_3',
+        L:'minecraft:lava_bucket',
+        W:'minecraft:water_bucket'
+    })
+    e.shaped('cobblefordays:tier_5',['III','LGW','III'],{
+        I:'cobblefordays:tier_4',
+        G:'minecraft:glass',
+        L:'minecraft:lava_bucket',
+        W:'minecraft:water_bucket'
+    })
+
+    //Simple Storage Network recipes
+    e.remove({id:'storagenetwork:kabel'})
+    e.shaped('6x storagenetwork:kabel',['SSS','IBI','SSS'],{
+        S:'minecraft:stone_slab',
+        I:'create:brass_ingot',
+        B:'minecraft:iron_block'
+    })
+
+    //Petty Pipes recipes
+    e.remove({id:'prettypipes:pipe'})
+    e.shaped('4x prettypipes:pipe',['   ',' R ','BKB'],{
+        R:'minecraft:redstone',
+        B:'minecraft:iron_bars',
+        K:'storagenetwork:kabel'
+    })
+
+    //Autocrafter recipe
+    e.remove({output:'craftingautomat:autocrafter'})
+    e.shaped('4x craftingautomat:autocrafter',['DDD','WCW','WPW'],{
+        D:'minecraft:light_blue_dye',
+        W:'#minecraft:planks',
+        C:'minecraft:crafting_table',
+        P:'minecraft:dropper'
+    })
+
+    //Temporal Recipes (Temporal recipes)
+
+    //Crook recipes
+    e.shaped('exnihilosequentia:crook_wood',['SS ',' S ',' S '],{
+        S:'minecraft:stick'
+    })
+    e.shaped('excompressum:compressed_crook',['CC ',' C ',' C '],{
+        C:'exnihilosequentia:crook_wood'
+    })
+
+    //Cyclic recipes
+    e.shaped('cyclic:hopper_gold',['G G','GSG','G G'],{
+        G:'minecraft:gold_block',
+        S:'speedyhoppers:speedyhopper_mk2'
+    })
+
+    //Create recipes
+    e.shaped('5x create:andesite_cobblestone',[' I ','ISI',' I '],{
+        I:'minecraft:iron_nugget',
+        S:'minecraft:stone'
+    })
+    e.shaped('create:andesite_casing',['AAA','WIW','AAA'],{
+        A:'create:andesite_alloy',
+        W:'#minecraft:logs',
+        I:'minecraft:iron_block'
+    })
+    e.shaped('create:copper_casing',['SSS','CWC','SSS'],{
+        C:'create:andesite_casing',
+        S:'thermal:copper_plate',
+        W:'#minecraft:logs'
+    })
+    e.shaped('create:brass_casing',['SSS','CWC','SSS'],{
+        C:'create:copper_casing',
+        S:'create:brass_sheet',
+        W:'#minecraft:logs'
+    })
+    e.shaped('create:precision_mechanism',['BBW','BGA','BBB'],{
+        B:'create:brass_sheet',
+        W:'#minecraft:planks',
+        G:'appliedenergistics2:wooden_gear',
+        A:'create:andesite_alloy'
+    })
+    e.shaped('3x create:shaft',['AA ','AA ','AA '],{
+        A:'create:andesite_alloy'
+    })
+    e.remove({output:'create:empty_blaze_burner'})
+    e.shaped('create:empty_blaze_burner',['BCB','BCB','PPP'],{
+        B:'minecraft:iron_bars',
+        C:'#forge:storage_blocks/charcoal',
+        P:'#forge:plates/iron'
+    })
+    e.shaped('create:blaze_burner',['BGB','BEB','III'],{
+		I:'minecraft:iron_block',
+		G:'minecraft:glowstone',
+		B:'minecraft:iron_bars',
+        E:'create:empty_blaze_burner'
+	})
+    e.remove({id:'create:crafting/materials/andesite_alloy'})
+    e.shaped('4x create:andesite_alloy',['NA','AN'],{
+        N:'#forge:nuggets/iron',
+        A:'minecraft:andesite'
+    })
+
+    //Immersive Engineering recipes
+    e.remove({output:'immersiveengineering:cokebrick'})
+    e.shaped('4x immersiveengineering:cokebrick',['CGC','GSG','CGC'],{
+		C:'create:brass_casing',
+		G:'minecraft:gold_ingot',
+		S:'minecraft:sandstone'
+    })
+    e.remove({output:'immersiveengineering:blastbrick',})
+    e.shaped('2x immersiveengineering:blastbrick',['BIB','ICI','BIB'],{
+        B:'minecraft:nether_brick',
+        I:'minecraft:gold_ingot',
+        C:'immersiveengineering:cokebrick',
+    })
+    e.remove({output:'immersiveengineering:dynamo'})
+    e.shaped('immersiveengineering:dynamo',['RCR','EEE'],{
+        R:'minecraft:redstone',
+        C:'immersiveengineering:coil_lv',
+        E:'#forge:plates/electrum'
+    })
+    
+    //Immersive Engineering Crusher recipes
+    e.recipes.immersiveengineeringCrusher('exnihilosequentia:dust','minecraft:sand')
+
+    //Immersive Engineering Metal Press recipes
+    var materials = ['iron','copper','tin','gold','silver']
+        for (material of materials) {
+            e.recipes.immersiveengineeringMetalPress(`thermal:${material}_plate`, `#forge:ingots/${material}`, 'immersiveengineering:mold_plate')
+        }
+    e.recipes.immersiveengineeringMetalPress('create:brass_sheet','create:brass_ingot','immersiveengineering:mold_plate')
+    e.recipes.immersiveengineeringMetalPress('immersiveengineering:plate_steel','#forge:ingots/steel','immersiveengineering:mold_plate')
+
+    //Immersive Engineering Arc Furnace recipes
+    var materials = ['iron','copper','tin','silver']
+        for (material of materials) {
+            e.recipes.immersiveengineeringArcFurnace([`2x thermal:${material}_dust`],`create:crushed_${material}_ore`)
+        }
+    
+    e.remove({id:'astralsorcery:altar/rock_collector_crystal'})
+    e.recipes.immersiveengineeringArcFurnace(['astralsorcery:rock_collector_crystal'],'4x minecraft:quartz_block',['4x minecraft:glowstone','8x minecraft:bone_block','2x thermal:electrum_block'])
+    e.recipes.immersiveengineeringArcFurnace(['minecraft:ender_pearl'],'4x thermal:ender_pearl_dust',['2x immersiveengineering:dust_coke'])
+
+    //Astral Sorcery recipes
+    e.remove({id:'astralsorcery:altar/wand'})
+    e.remove({id:'astralsorcery:block_transmutation/craftingtable_altar'})
+    e.remove({id:'astralsorcery:altar/linking_tool'})
+    
+    e.shaped('astralsorcery:linking_tool',['SA ','SCA','LSS'],{
+        C:Item.of('astralsorcery:rock_collector_crystal').ignoreNBT(),
+        S:'minecraft:stick',
+        A:'astralsorcery:aquamarine',
+        L:'minecraft:oak_log'
+    })
+    e.shaped('astralsorcery:altar_discovery',['MMM','LCL','III'],{
+        M:'astralsorcery:marble_raw',
+        C:Item.of('astralsorcery:rock_collector_crystal').ignoreNBT(),
+        I:'minecraft:iron_block',
+        L:'immersiveengineering:treated_wood_horizontal'
+    })
+    e.shaped('3x astralsorcery:rock_crystal_ore',['SSS','SCS','SSS'],{
+        S:'minecraft:stone',
+        C:Item.of('astralsorcery:rock_collector_crystal').ignoreNBT()
+    })
+
+    //Astral Sorcery Altar recipes
+    e.remove({id:'astralsorcery:smelting/aquamarine'})
+    e.custom({type:'astralsorcery:altar',altar_type:0,duration:40,starlight:200,pattern:[
+          '_____',
+          '_DND_',
+          '_NDN_',
+          '_DND_',
+          '_____'
+        ],key:{
+          D:{item:'exnihilosequentia:dust'},
+          N:{item:'minecraft:quartz'},
+        },
+        output:[{item:'astralsorcery:aquamarine',count:5}],
+        effects:['astralsorcery:built_in_effect_discovery_central_beam']
+    })
+    e.custom({type:'astralsorcery:altar',altar_type:0,duration:40,starlight:500,pattern:[
+          '_____',
+          '__A__',
+          '_AGA_',
+          '__A__',
+          '_____'
+        ], key:{
+          A:{item:'astralsorcery:aquamarine'},
+          G:{item:'minecraft:glowstone_dust'},
+        },
+        output:[{item:'thermal:ender_pearl_dust',count:2}],
+        effects:['astralsorcery:built_in_effect_discovery_central_beam']
+    })
+    e.custom({type:'astralsorcery:altar',altar_type:0,duration:40,starlight:100,pattern:[
+          '_____',
+          '__N__',
+          '_NDN_',
+          '__N__',
+          '_____'
+        ],key:{
+          N:{item:'minecraft:quartz'},
+          D:{item:'exnihilosequentia:dust'},
+        },
+        output:[{item:'astralsorcery:marble_raw',count:5}],
+        effects:['astralsorcery:built_in_effect_discovery_central_beam']
+    })
+
+    //Astral Sorcery Transmutation recipes
+    e.custom({
+        type:'astralsorcery:block_transmutation',
+        input:[{block:'minecraft:cobblestone',display:{item:'minecraft:cobblestone',count:1}}],
+        output:{block:'compressedblocks:c0_cobblestone'},display:{item:'compressedblocks:c0_cobblestone',count: 1},
+        starlight: 100
+    })
+    e.custom({
+        type:'astralsorcery:block_transmutation',
+        input:[{block:'minecraft:gravel',display:{item:'minecraft:gravel',count:1}}],
+        output:{block:'compressedblocks:c0_gravel'},display:{item:'compressedblocks:c0_gravel',count: 1},
+        starlight: 100
+    })
+    e.custom({
+        type:'astralsorcery:block_transmutation',
+        input:[{block:'minecraft:sand',display:{item:'minecraft:sand',count:1}}],
+        output:{block:'compressedblocks:c0_sand'},display:{item:'compressedblocks:c0_sand',count: 1},
+        starlight: 100
+    })
+    e.custom({
+        type:'astralsorcery:block_transmutation',
+        input:[{block:'exnihilosequentia:dust',display:{item:'exnihilosequentia:dust',count:1}}],
+        output:{block:'excompressum:compressed_dust'},display:{item:'excompressum:compressed_dust',count: 1},
+        starlight: 100
+    })
+
+    //Astral Sorcery Lightwell recipes
+    e.custom({
+        type:'astralsorcery:lightwell',
+        input:'#minecraft:flowers',
+        output:'kubejs:basic_petally_fluid',
+        productionMultiplier:0.1,
+        shatterMultiplier:15.0,
+        color:0
+    })
+
+    //AE2 Recipes
+    e.remove({output:'appliedenergistics2:wooden_gear'})
+    e.shaped('4x appliedenergistics2:wooden_gear',[' S ','S S',' S '],{
+        S:'minecraft:stick'
+    })
+
+    //Shapeless recipes
+    e.shapeless('minecraft:gravel',['compressedblocks:c0_cobblestone','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('minecraft:sand',['compressedblocks:c0_gravel','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('9x exnihilosequentia:dust',['excompressum:compressed_dust'])
+    e.shapeless('minecraft:vine',['9x #minecraft:leaves'])
+    e.shapeless('thermal:iron_dust',['minecraft:iron_ore','minecraft:stone_pickaxe']).damageItem('minecraft:stone_pickaxe','1')
+    e.shapeless('thermal:copper_dust',['thermal:copper_ore','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('thermal:tin_dust',['thermal:tin_ore','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('thermal:silver_dust',['thermal:silver_ore','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('exnihilosequentia:dust',['compressedblocks:c0_sand','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('excompressum:compressed_dust',['9x exnihilosequentia:dust'])
+    e.shapeless('create:crushed_iron_ore',['minecraft:cobblestone','minecraft:stone_pickaxe']).damageItem('minecraft:stone_pickaxe','1')
+    e.shapeless('create:crushed_copper_ore',['minecraft:gravel','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('create:crushed_tin_ore',['minecraft:sand','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('create:crushed_silver_ore',['exnihilosequentia:dust','minecraft:iron_pickaxe']).damageItem('minecraft:iron_pickaxe','1')
+    e.shapeless('thermal:charcoal_block',['9x minecraft:charcoal'])
+    e.shapeless('minecraft:cobblestone',['2x minecraft:cobblestone_slab'])
+    e.shapeless('minecraft:iron_ingot',['9x minecraft:iron_nugget'])
+    e.shapeless('9x minecraft:iron_ingot',['minecraft:iron_block'])
+	e.shapeless('9x minecraft:iron_ingot',['9x mysticalagriculture:iron_essence'])
+    e.shapeless('thermal:copper_ingot',['9x thermal:copper_nugget'])
+    e.shapeless('9x thermal:copper_ingot',['thermal:copper_block'])
+	e.shapeless('9x thermal:copper_ingot',['9x mysticalagriculture:copper_essence'])
+    e.shapeless('thermal:tin_ingot',['9x thermal:tin_nugget'])
+    e.shapeless('9x thermal:tin_ingot',['thermal:tin_block'])
+	e.shapeless('9x thermal:tin_ingot',['9x mysticalagriculture:tin_essence'])
+    e.shapeless('thermal:silver_ingot',['9x thermal:silver_nugget'])
+    e.shapeless('9x thermal:silver_ingot',['thermal:silver_block'])
+	e.shapeless('9x thermal:silver_ingot',['9x mysticalagriculture:silver_essence'])
+    e.shapeless('4x minecraft:oak_planks',['minecraft:oak_log'])
+    e.shapeless('9x thermal:copper_ingot',['create:copper_block'])
+    e.shapeless('thermal:copper_block',['9x thermal:copper_ingot'])
+    e.shapeless('minecraft:stone',['2x minecraft:stone_slab'])
+    e.shapeless('9x create:brass_ingot',['create:brass_block'])
+    e.shapeless('4x minecraft:cobblestone',['4x pebbles:stone_pebble'])
+    e.shapeless('minecraft:flint',['3x minecraft:gravel'])
+
+    //Smelting recipes
+    e.smelting('minecraft:stone',['minecraft:cobblestone'])
+    e.smelting('minecraft:iron_ingot',['#forge:dusts/iron'])
+    e.smelting('thermal:copper_ingot',['#forge:dusts/copper'])
+    e.smelting('thermal:tin_ingot',['#forge:dusts/tin'])
+    e.smelting('thermal:silver_ingot',['#forge:dusts/silver'])
+    e.smelting('minecraft:andesite',['create:andesite_cobblestone'])
+
+    //Create compacting
+    e.recipes.createCompacting('thermal:rubber',[Fluid.of('thermal:latex',25)]).heated()
+    e.recipes.createCompacting('minecraft:diamond',['9x translocators:diamond_nugget']).heated()
+    e.remove({id:'create:crafting/kinetics/belt_connector'})
+    e.recipes.createCompacting('create:belt_connector',['6x thermal:rubber'])
+    e.remove({id:'create:pressing/sugar_cane'})
+    e.recipes.createCompacting('minecraft:paper',['9x #forge:dusts/wood'])
+    e.recipes.createCompacting('minecraft:obsidian',[Fluid.of('tconstruct:molten_obsidian',1000)])
+    e.recipes.createCompacting('thermal:lead_ingot',[Fluid.of('tconstruct:molten_lead',144)])
+
+    //Create mixing
+    e.recipes.createMixing('4x minecraft:glowstone_dust',['2x minicoal2:minicharcoal','2x minecraft:torch','#forge:dusts/iron'])
+    e.recipes.createMixing('2x minecraft:redstone',['minecraft:glowstone_dust','3x minecraft:iron_nugget','#forge:dusts/copper'])
+    e.recipes.createMixing('3x minecraft:coal',['#forge:storage_blocks/charcoal']).heated()
+    e.recipes.createMixing('translocators:diamond_nugget',['#forge:storage_blocks/coal']).heated()
+    e.recipes.createMixing(Fluid.of('thermal:latex',100),[Fluid.of('minecraft:water',1000),'9x #minecraft:leaves']).heated()
+    e.recipes.createMixing('3x minecraft:gold_ingot',['#forge:storage_blocks/copper','3x minecraft:glowstone_dust']).heated()
+    e.recipes.createMixing('3x create:brass_ingot',['#forge:storage_blocks/copper','3x create:andesite_alloy']).heated()
+    e.remove({output:'#forge:ingots/electrum',})
+    e.remove({output:'#forge:dusts/electrum',})
+    e.recipes.createMixing('3x thermal:electrum_ingot',['minecraft:gold_block','3x #forge:ingots/steel','3x immersiveengineering:coal_coke'])
+    e.recipes.createMixing(Fluid.of('tconstruct:molten_obsidian',1000),['3x minecraft:charcoal','compressedblocks:c0_stone']).heated()
+    e.recipes.createMixing('minecraft:leather',['4x forbidden_arcanus:rotten_leather',Fluid.of('minecraft:water',250)]).heated()
+    e.recipes.createMixing(Fluid.of('tconstruct:molten_lead',288),['4x minecraft:obsidian','2x minecraft:iron_ingot']).heated()
+
+    //Create milling
+    e.recipes.createMilling('2x create:crushed_iron_ore',['minecraft:cobblestone'])
+    e.recipes.createMilling('2x create:crushed_copper_ore',['minecraft:gravel'])
+    e.recipes.createMilling('2x create:crushed_tin_ore',['minecraft:sand'])
+    e.recipes.createMilling('2x create:crushed_silver_ore',['exnihilosequentia:dust'])
+    e.recipes.createMilling('thermal:iron_dust',['create:crushed_iron_ore'])
+    e.recipes.createMilling('thermal:copper_dust',['create:crushed_copper_ore'])
+    e.recipes.createMilling('thermal:tin_dust',['create:crushed_tin_ore'])
+    e.recipes.createMilling('thermal:silver_dust',['create:crushed_silver_ore'])
+
+    //Create pressing
+    e.recipes.createPressing('thermal:iron_plate',['minecraft:iron_block'])
+    e.recipes.createPressing('thermal:copper_plate',['#forge:storage_blocks/copper'])
+    e.recipes.createPressing('create:brass_sheet',['create:brass_block'])
+    e.recipes.createPressing('thermal:gold_plate',['minecraft:gold_block'])
+    e.recipes.createPressing('immersiveengineering:plate_steel',['#forge:storage_blocks/steel'])
+    e.recipes.createPressing('thermal:electrum_plate',['#forge:storage_blocks/electrum'])
+
+    //Create cutting
+    e.recipes.createCutting('3x immersiveengineering:dust_wood',['#minecraft:logs'])
+
+    //Create sequence assembly
+    e.remove({output:'immersiveengineering:blastbrick_reinforced'})
+    e.recipes.createSequencedAssembly(['immersiveengineering:blastbrick_reinforced'],'immersiveengineering:blastbrick',[
+        e.recipes.createDeploying('immersiveengineering:blastbrick',['immersiveengineering:blastbrick','immersiveengineering:plate_steel']),
+        e.recipes.createDeploying('immersiveengineering:blastbrick',['immersiveengineering:blastbrick','immersiveengineering:plate_steel']),
+        e.recipes.createDeploying('immersiveengineering:blastbrick',['immersiveengineering:blastbrick','immersiveengineering:plate_steel']),
+        e.recipes.createDeploying('immersiveengineering:blastbrick',['immersiveengineering:blastbrick','immersiveengineering:plate_steel']),
+        e.recipes.createPressing('immersiveengineering:blastbrick',['immersiveengineering:blastbrick'])
+    ]).transitionalItem('immersiveengineering:blastbrick').loops(1)
+    e.recipes.createSequencedAssembly(['4x create:crushed_iron_ore'],'minecraft:cobblestone',[
+        e.recipes.createDeploying('minecraft:cobblestone',['minecraft:cobblestone',Item.of('minecraft:iron_pickaxe').ignoreNBT()]),
+    ]).transitionalItem('minecraft:cobblestone').loops(1)
+    e.recipes.createSequencedAssembly(['4x create:crushed_copper_ore'],'minecraft:gravel',[
+        e.recipes.createDeploying('minecraft:gravel',['minecraft:gravel',Item.of('minecraft:iron_pickaxe').ignoreNBT()]),
+    ]).transitionalItem('minecraft:gravel').loops(1)
+    e.recipes.createSequencedAssembly(['4x create:crushed_tin_ore'],'minecraft:sand',[
+        e.recipes.createDeploying('minecraft:sand',['minecraft:sand',Item.of('minecraft:iron_pickaxe').ignoreNBT()]),
+    ]).transitionalItem('minecraft:sand').loops(1)
+    e.recipes.createSequencedAssembly(['4x create:crushed_silver_ore'],'exnihilosequentia:dust',[
+        e.recipes.createDeploying('exnihilosequentia:dust',['exnihilosequentia:dust',Item.of('minecraft:iron_pickaxe').ignoreNBT()]),
+    ]).transitionalItem('exnihilosequentia:dust').loops(1)
+    e.recipes.createSequencedAssembly(['create:precision_mechanism'],'appliedenergistics2:wooden_gear',[
+        e.recipes.createDeploying('appliedenergistics2:wooden_gear',['appliedenergistics2:wooden_gear','create:brass_sheet']),
+        e.recipes.createDeploying('appliedenergistics2:wooden_gear',['appliedenergistics2:wooden_gear','create:brass_sheet']),
+        e.recipes.createDeploying('appliedenergistics2:wooden_gear',['appliedenergistics2:wooden_gear','create:brass_sheet']),
+        e.recipes.createDeploying('appliedenergistics2:wooden_gear',['appliedenergistics2:wooden_gear','create:andesite_alloy']),
+        e.recipes.createDeploying('appliedenergistics2:wooden_gear',['appliedenergistics2:wooden_gear','#minecraft:planks'])
+    ]).transitionalItem('appliedenergistics2:wooden_gear').loops(1)
+    e.recipes.createSequencedAssembly(['minecraft:gravel'],'compressedblocks:c0_cobblestone',[
+        e.recipes.createDeploying('compressedblocks:c0_cobblestone',['compressedblocks:c0_cobblestone',Item.of('minecraft:iron_pickaxe').ignoreNBT()])
+    ]).transitionalItem('compressedblocks:c0_cobblestone').loops(1)
+    e.recipes.createSequencedAssembly(['minecraft:sand'],'compressedblocks:c0_gravel',[
+        e.recipes.createDeploying('compressedblocks:c0_gravel',['compressedblocks:c0_gravel',Item.of('minecraft:iron_pickaxe').ignoreNBT()])
+    ]).transitionalItem('compressedblocks:c0_gravel').loops(1)
+    e.recipes.createSequencedAssembly(['exnihilosequentia:dust'],'compressedblocks:c0_sand',[
+        e.recipes.createDeploying('compressedblocks:c0_sand',['compressedblocks:c0_sand',Item.of('minecraft:iron_pickaxe').ignoreNBT()])
+    ]).transitionalItem('compressedblocks:c0_sand').loops(1)
+    
+    //Create mechanical crafting
+    e.remove({output:'immersiveengineering:radiator'})
+    e.recipes.createMechanicalCrafting('immersiveengineering:radiator',[
+        'ISSSI',
+        'SCCCS',
+        'SCBCS',
+        'SCCCS',
+        'ISSSI'
+    ],{
+        S:'#forge:ingots/steel',
+        C:'immersiveengineering:coke',
+        B:'minecraft:water_bucket',
+        I:'minecraft:iron_ingot'
+    })
+    e.remove({output:'immersiveengineering:generator'})
+    e.recipes.createMechanicalCrafting('immersiveengineering:generator',[
+        'ISSSI',
+        'SPPPS',
+        'SPDPS',
+        'SPPPS',
+        'ISSSI'
+    ],{
+        S:'#forge:ingots/steel',
+        P:'#forge:ingots/electrum',
+        D:'immersiveengineering:dynamo',
+        I:'minecraft:iron_ingot'
+    })
+    e.remove({output:'immersiveengineering:light_engineering'})
+    e.recipes.createMechanicalCrafting('immersiveengineering:light_engineering',[
+        'ICCCI',
+        'CBFFC',
+        'CFFFC',
+        'CFFRC',
+        'ICCCI'
+    ],{
+        I:'immersiveengineering:component_iron',
+        C:'minecraft:iron_ingot',
+        B:'minecraft:light_blue_stained_glass_pane',
+        R:'minecraft:clock',
+        F:'#forge:ingots/copper'
+    })
+    e.remove({output:'immersiveengineering:heavy_engineering'})
+    e.recipes.createMechanicalCrafting('immersiveengineering:heavy_engineering',[
+        'ICCCI',
+        'CFFFC',
+        'CFFFC',
+        'CFFRC',
+        'ICCCI'
+    ],{
+        I:'immersiveengineering:component_steel',
+        C:'#forge:ingots/steel',
+        R:'minecraft:clock',
+        F:'#forge:ingots/electrum'
+    })
+    e.remove({output:'immersiveengineering:rs_engineering'})
+    e.recipes.createMechanicalCrafting('immersiveengineering:rs_engineering',[
+        'CCCCC',
+        'CFFFC',
+        'CFIFC',
+        'CFFFC',
+        'CCCCC'
+    ],{
+        I:'#forge:ingots/copper',
+        C:'minecraft:iron_ingot',
+        F:'#forge:dusts/redstone'
+    })
+})
+onEvent('recipes',e=>{
+    
+})

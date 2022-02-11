@@ -1,0 +1,44 @@
+{
+    "name":"§aBasic Tank",
+    "appearance":{
+        "block":"thermal:fluid_cell",
+        "tool_type":"pickaxe",
+        "mining_level":1
+    },
+    "components":[
+        {
+            "type":"custommachinery:fluid",
+            "id":"fluid1",
+            "mode":"both",
+            "capacity":5000,
+            "maxInput":10,
+            "maxOutput":10
+        }
+    ],
+    "gui":[
+        {
+            "type":"custommachinery:texture",
+            "x":40,
+            "y":0,
+            "width":190,
+            "texture":"custommachinery:textures/gui/base_background.png"
+        },
+        {
+            "type":"custommachinery:player_inventory",
+            "x":50,
+            "y":80
+        },
+        {
+            "type":"custommachinery:fluid",
+            "id":"fluid1",
+            "x":100,
+            "y":20
+        },
+        {
+            "type":"custommachinery:text",
+            "x":100,
+            "y":5,
+            "text":"Basic Tank"
+        }
+    ]
+}
